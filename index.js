@@ -25,6 +25,7 @@ async function run() {
         const db = client.db('portfolio');
         const collection = db.collection('users');
         const skillsCollection = db.collection('skills');
+        const projectsCollection = db.collection('projects');
 
 
         // User Registration
@@ -78,7 +79,7 @@ async function run() {
         });
 
 
-        // ----------inset data into database-------------
+        // ----------inset skills data into database-------------
         app.post('/api/v1/skill', async (req, res) => {
             const body = req.body
             const result = await skillsCollection.insertOne(body);
@@ -90,6 +91,21 @@ async function run() {
             const result = await skillsCollection.find().toArray();
             res.json(result)
         });
+
+
+         // ----------inset projects data into database-------------
+         app.post('/api/v1/project', async (req, res) => {
+            const body = req.body
+            const result = await projectsCollection.insertOne(body);
+            res.json(result)
+        })
+
+          // Get all projects
+          app.get('/api/v1/project', async (req, res) => {
+            const result = await projectsCollection.find().toArray();
+            res.json(result)
+        });
+
 
 
 
