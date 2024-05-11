@@ -26,6 +26,7 @@ async function run() {
         const collection = db.collection('users');
         const skillsCollection = db.collection('skills');
         const projectsCollection = db.collection('projects');
+        const blogsCollection = db.collection('blogs');
 
 
         // User Registration
@@ -86,8 +87,8 @@ async function run() {
             res.json(result)
         })
 
-         // Get all skills
-         app.get('/api/v1/skill', async (req, res) => {
+        // Get all skills
+        app.get('/api/v1/skill', async (req, res) => {
             const result = await skillsCollection.find().toArray();
             res.json(result)
         });
@@ -101,15 +102,15 @@ async function run() {
         })
 
 
-         // ----------inset projects data into database-------------
-         app.post('/api/v1/project', async (req, res) => {
+        // ----------inset projects data into database-------------
+        app.post('/api/v1/project', async (req, res) => {
             const body = req.body
             const result = await projectsCollection.insertOne(body);
             res.json(result)
         })
 
-          // Get all projects
-          app.get('/api/v1/project', async (req, res) => {
+        // Get all projects
+        app.get('/api/v1/project', async (req, res) => {
             const result = await projectsCollection.find().toArray();
             res.json(result)
         });
@@ -122,7 +123,40 @@ async function run() {
             res.send(result)
         })
 
-        
+
+      // ----------inset blogs data into database-------------
+      app.post('/api/v1/blog', async (req, res) => {
+        const body = req.body
+        const result = await blogsCollection.insertOne(body);
+        res.json(result)
+    })
+
+
+        // Get all blogs
+        app.get('/api/v1/blog', async (req, res) => {
+            const result = await blogsCollection.find().toArray();
+            res.json(result)
+        });
+
+        // Delete Projects by using id
+        app.delete("/api/v1/blog/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await blogsCollection.deleteOne(query)
+            res.send(result)
+        })
+
+          // Get blog searching by Id
+          app.get('/api/v1/blog/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await blogsCollection.findOne(query)
+            res.json(result)
+        })
+
+
+
+
 
 
         // Start the server
