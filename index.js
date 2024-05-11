@@ -92,6 +92,14 @@ async function run() {
             res.json(result)
         });
 
+        // Delete Skills by using id
+        app.delete("/api/v1/skill/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await skillsCollection.deleteOne(query)
+            res.send(result)
+        })
+
 
          // ----------inset projects data into database-------------
          app.post('/api/v1/project', async (req, res) => {
@@ -106,7 +114,15 @@ async function run() {
             res.json(result)
         });
 
+        // Delete Projects by using id
+        app.delete("/api/v1/project/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await projectsCollection.deleteOne(query)
+            res.send(result)
+        })
 
+        
 
 
         // Start the server
