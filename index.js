@@ -102,10 +102,42 @@ async function run() {
         })
 
 
+        // Get single skills searching by Id
+        app.get('/api/v1/skill/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await skillsCollection.findOne(query)
+            res.json(result)
+        })
+
+        // update skill data form database-----------//
+        app.patch('/api/v1/skill/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const updateSkill = req.body;
+            const skill = {
+                $set: {
+                    ...updateSkill
+                }
+            }
+            const result = await skillsCollection.updateOne(query, skill)
+            res.json(result)
+
+        })
+
+
         // ----------inset projects data into database-------------
         app.post('/api/v1/project', async (req, res) => {
             const body = req.body
             const result = await projectsCollection.insertOne(body);
+            res.json(result)
+        })
+
+        // Get single project searching by Id
+        app.get('/api/v1/project/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await projectsCollection.findOne(query)
             res.json(result)
         })
 
@@ -123,13 +155,28 @@ async function run() {
             res.send(result)
         })
 
+         // update skill data form database-----------//
+         app.patch('/api/v1/project/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const updateSkill = req.body;
+            const toys = {
+                $set: {
+                    ...updateSkill
+                }
+            }
+            const result = await projectsCollection.updateOne(query, toys)
+            res.json(result)
 
-      // ----------inset blogs data into database-------------
-      app.post('/api/v1/blog', async (req, res) => {
-        const body = req.body
-        const result = await blogsCollection.insertOne(body);
-        res.json(result)
-    })
+        })
+
+
+        // ----------inset blogs data into database-------------
+        app.post('/api/v1/blog', async (req, res) => {
+            const body = req.body
+            const result = await blogsCollection.insertOne(body);
+            res.json(result)
+        })
 
 
         // Get all blogs
@@ -146,12 +193,27 @@ async function run() {
             res.send(result)
         })
 
-          // Get blog searching by Id
-          app.get('/api/v1/blog/:id', async (req, res) => {
+        // Get blog searching by Id
+        app.get('/api/v1/blog/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
             const result = await blogsCollection.findOne(query)
             res.json(result)
+        })
+
+         // update skill data form database-----------//
+         app.patch('/api/v1/blog/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const updateBlog = req.body;
+            const blog = {
+                $set: {
+                    ...updateBlog
+                }
+            }
+            const result = await blogsCollection.updateOne(query, blog)
+            res.json(result)
+
         })
 
 
